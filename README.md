@@ -5,6 +5,6 @@ How the interface will look and feel is up to you, as are the specific packages 
 
 Don't forget to document your creations. Happy coding!
 
-![machine_operator](drone_operator.jpeg)
+![machine_operator](drone_operator.jpg)
 
 - Kernow Robotics.
