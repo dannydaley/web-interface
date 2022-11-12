@@ -31,6 +31,7 @@ app.use(session(userSession));
 //#region SECURITY
 // set up crypto middleware for hashing password and checking password hahses
 let crypto = require('crypto');
+// const { Stream } = require('stream');
 
 // number of iterations to jumble the hash
 const iterations = 1000;
@@ -49,6 +50,17 @@ function passwordHash(thePassword, theSalt) {
   const pepper = "7439329de19addde9c46147765b39e0ac0577b7e73534210ea8a721cad50e7393f5f68d3a26550b5d50ff6deeae37b179c06a4abab4c58e039fd8c279d9ddbd84f06c8eb17d7abf063438df3dd0ca12b32c923fea05569bc319403c0983ffdec4b5f7e9bcf8c333e39e2f6c8fde97173c6b8be8616001202e0b533f5078889084ea061d434181276405038a5624189eec9c3049917fad498484bb33291181e77b99e27a170d68c65d2a6449cd0bdbc0cfb54c3cc7e00ed891fc6ffb3af0de4201bb45c09b5a21ba6ccd8d658216dd41a529549a1a6bd5d3589da4df590246c8f6ad6944cb18d0a70c1cbff3dea635e08f93cae606d0ec43ba6996fa396834067";
    return crypto.pbkdf2Sync(thePassword, pepper + theSalt, iterations, hashSize, hashAlgorithm).toString('hex');
 }
+
+// Stream = require('node-rtsp-stream');
+// stream = new Stream({
+//     name: 'name',
+//     streamUrl: 'http://192.168.0.103:8081/',
+//     wsPort: 8081,
+//     ffmpegOptions: {
+//         '-stats': '',
+//         '-r': 30
+//     }
+// })
 
 // SQLite 3 setup for test db while in development
 var sqlite3 = require('sqlite3').verbose();
