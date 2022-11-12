@@ -21,7 +21,7 @@ export default class App extends Component {
   render() {
     return (
       <div className="App" style={{backgroundColor: 'grey', minHeight: '100vh'}}>
-      <LoginPage />    
+      <MainPage />    
       {/* <MainPage /> */}
       </div>
     );
