@@ -2,6 +2,8 @@ import { Container, Box } from "@mui/system";
 import * as React from 'react';
 
 import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+
 export default function LoginPage() {
 
     return(
@@ -22,7 +24,7 @@ export default function LoginPage() {
       noValidate
       autoComplete="off"
     >
-      <div >
+      <div style = {{display: "flex", flexDirection: "column", justifyContent: "center" }}>
           <TextField
           
           id="outlined-required"
@@ -37,8 +39,13 @@ export default function LoginPage() {
           label="password"
           defaultValue="Hello World"
         />
-      
-      </div>
+        
+         <Button variant="contained">Login</Button>
+         
+            
+         
+         
+        </div>
       <div>
         
       </div>
