@@ -4,10 +4,16 @@ import Navbar from './navbar'
 import machineStats from './machineStats.js'
 import { blue } from '@mui/material/colors'
 
-export default function MainPage() {
+export default class MainPage extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        let { onRouteChange, route, updateSession } = this.props;  
     return(
         <div>
-            <Navbar />
+            <Navbar onRouteChange={onRouteChange}/>
             <div style = {{display: "flex", justifyContent: 'space-between',}}>
                  {/* <machineStats /> */}
                 <div style = {{width: '30%', height: '90vh', border: '2px solid black', background: 'white', borderRadius: '10px', display: "flex", justifyContent: 'center', flexDirection: 'column', alignContent: 'center', alignItems:'center'}}>
@@ -32,5 +38,8 @@ export default function MainPage() {
             </div>
         </div>
     )
+
+    }
+
 }
 
