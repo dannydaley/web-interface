@@ -10,7 +10,18 @@ Install docker and docker-compose
 chmod +x ubuntu_20_04_docker_install.sh
 . ubuntu_20_04_docker_install.sh
 ```
-
+Added [Intel Realsense D415](https://github.com/iory/docker-ros-realsense) docker
+container repo as submodule
+```bash
+# adding submodule "git submodule add https://github.com/iory/docker-ros-realsense"
+# setup submodules after pulling
+git submodule update --recursive --init
+```
+give docker-containers access to X11 display on host machine (to view camera feed
+on host machine from container)
+```bash
+xhost +
+```
 
 
 ### Raspberrypi setup (Debian 11)

@@ -1,0 +1,3 @@
+[submodule "camerafeed/docker-ros-realsense"]
+	path = camerafeed/docker-ros-realsense
+	url = https://github.com/AlfredWilmot/docker-ros-realsense.git
