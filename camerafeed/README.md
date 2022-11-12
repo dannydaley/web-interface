@@ -17,6 +17,11 @@ container repo as submodule
 # setup submodules after pulling
 git submodule update --recursive --init
 ```
+give docker-containers access to X11 display on host machine (to view camera feed
+on host machine from container)
+```bash
+xhost +
+```
 
 
 ### Raspberrypi setup (Debian 11)

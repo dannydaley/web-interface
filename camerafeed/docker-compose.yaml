@@ -1,0 +1,34 @@
+version: '3.3'
+
+services:
+
+  ros-master:
+    container_name: ros-master
+    image: osrf/ros:kinetic-desktop-full
+    command: stdbuf -o L roscore
+    networks:
+      - ros
+    restart: always
+
+  realsense-d415:
+    container_name: realsense-d415
+    build: ./docker-ros-realsense/.
+    depends_on:
+      - ros-master
+    environment:
+      #- ROS_MASTER_URI=http://ros-master:11311
+      - DISPLAY=$DISPLAY
+      - XAUTHORITY=$XAUTHORITY
+    networks:
+      - ros
+    privileged: true
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:ro
+      - /dev/bus/usb:/dev/bus/usb
+    command: stdbuf -o L roslaunch realsense2_camera rs_rgbd.launch enable_pointcloud:=true align_depth:=false depth_registered_processing:=true align_depth:=true
+        #command: roslaunch realsense2_camera rs_rgbd.launch enable_pointcloud:=true align_depth:=false depth_registered_processing:=true align_depth:=true
+    restart: always
+
+networks:
+  ros:
+    driver: bridge
