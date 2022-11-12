@@ -8,7 +8,7 @@ import Navbar from './components/navbar';
 
 function App() {
   return (
-    <div className="App">
+    <div className="App" style={{backgroundColor: 'grey', minHeight: '100vh'}}>
 
     <LoginPage />
     
