@@ -43,7 +43,8 @@ services:
     privileged: true
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix:ro
-    command: stdbuf -o L rviz
+      - ./shared-volumes/rviz/realsense-d415-config.rviz:/root/.rviz/default.rviz
+    command: stdbuf -o L rviz -d /root/.rviz/default.rviz
     restart: always
 
 networks:
