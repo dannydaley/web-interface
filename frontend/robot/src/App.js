@@ -41,13 +41,8 @@ export default class App extends Component {
     return (
      
       <div className="App" style={{backgroundColor: 'grey', minHeight: '100vh'}}>
-        {/* <SignUpForm />  */}
         { this.state.isSignedIn === true ? <MainPage /> : <LoginPage onRouteChange={this.onRouteChange} route={this.state.route}/> }
-
-      {/* <LoginPage />     */}
-      {/* <MainPage /> */}
       </div>
     );
   }
-
 }
