@@ -12,13 +12,15 @@ services:
 
   realsense-d415:
     container_name: realsense-d415
-    build: ./docker-ros-realsense/.
+    build:
+      context: ./docker-ros-realsense/.
+      target: realsense_base
     depends_on:
       - ros-master
     environment:
       #- ROS_MASTER_URI=http://ros-master:11311
       - DISPLAY=$DISPLAY
-      - XAUTHORITY=$XAUTHORITY
+        #- XAUTHORITY=$XAUTHORITY
     networks:
       - ros
     privileged: true
@@ -26,7 +28,6 @@ services:
       - /tmp/.X11-unix:/tmp/.X11-unix:ro
       - /dev/bus/usb:/dev/bus/usb
     command: stdbuf -o L roslaunch realsense2_camera rs_rgbd.launch enable_pointcloud:=true align_depth:=false depth_registered_processing:=true align_depth:=true
-        #command: roslaunch realsense2_camera rs_rgbd.launch enable_pointcloud:=true align_depth:=false depth_registered_processing:=true align_depth:=true
     restart: always
 
 networks:
