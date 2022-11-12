@@ -2,24 +2,29 @@ import logo from './logo.svg';
 import './App.css';
 import LoginPage from './components/Login';
 import Navbar from './components/navbar';
-import mainPage from './components/mainPage';
-import * as React from 'react'
+import React , { Component } from "react";
+import MainPage from './components/mainPage';
 
+export default class App extends Component {
 
-function App() {
-  return (
-    // <div className="App" style={{backgroundColor: 'grey', minHeight: '100vh', minWidth: '100vw'}}>
+  constructor() {
+    super();
+    this.state = {
+      userFirstName: '',
+      userLastName: '',
+      loggedInUsername: '',
+      userProfilePicture: '',
+      route: ''
+    }
+  }
 
-    // {/* <LoginPage /> */}
-    <div>
-      <Navbar />
-      <div>
-      <mainPage />
+  render() {
+    return (
+      <div className="App" style={{backgroundColor: 'grey', minHeight: '100vh'}}>
+      {/* <LoginPage />     */}
+      <MainPage />
       </div>
-    </div>
-    
-    // </div>
-  );
-}
+    );
+  }
 
-export default App;
+}

@@ -1,10 +1,12 @@
-import * as React from 'react';
+import * as React from 'react'
+import Navbar from './navbar'
 
-export default function mainPage(){
+export default function MainPage() {
     return(
-      
-        <h1>helloooooo</h1>
-        
+        <div>
+            <Navbar />
             
-    )    
+        </div>
+    )
 }
+
