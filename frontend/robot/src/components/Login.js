@@ -1,8 +1,9 @@
 import { Container, Box } from "@mui/system";
 import * as React from 'react';
-
+import Divider from '@mui/material/Divider';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import SignUpForm from "./signUp";
 
 export default class LoginPage extends React.Component {
   constructor() {
@@ -42,7 +43,8 @@ onSubmitSignIn = () => {
 
 
   render() {
-
+    let { onRouteChange, route, updateSession } = this.props;   
+    if (route === 'signin' || route === 'signout'){  
     return(
       <div style={{height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center'
     }}>
@@ -60,27 +62,27 @@ onSubmitSignIn = () => {
       noValidate
       autoComplete="off"
     >
-      <div style = {{display: "flex", flexDirection: "column", justifyContent: "center" }}>
+      <div style = {{display: "flex", flexDirection: "column", justifyContent: "center", alignConten:'center', alignItems: 'center' }}>
           <TextField
-          
+          sx={{width: '33ch'}}
           id="outlined-required"
           label="email"
           defaultValue="email"
-          helperText="Incorrect entry."
           onChange={this.onEmailChange}
         />
         <TextField
-          
+          sx={{width: '33ch'}}
           id="outlined-required"
           type="password" 
           label="password"
           defaultValue=""
           onChange={this.onPasswordChange}
-        />
-        
-         <Button variant="contained"
-                                     onSubmit={()=> this.onSubmitSignIn()}                            
-                                     onClick={() => this.onSubmitSignIn()}>Login</Button>
+        />        
+         <Button variant="contained" sx={{width: '29ch'}} 
+            onSubmit={()=> this.onSubmitSignIn()}                            
+            onClick={() => this.onSubmitSignIn()}>Login</Button>
+            <Divider variant="middle" style={{marginTop: '20px', marginBottom: '5x'}}/>
+         <Button variant="contained" sx={{width: '29ch'}} onClick={()=>onRouteChange('signup')}>Sign Up</Button> 
          
             
          
@@ -93,6 +95,10 @@ onSubmitSignIn = () => {
         </Container>
         </div>
     )
+  } else if (route === 'signup'){
+      return (
+                <SignUpForm onRouteChange={onRouteChange} />        
+         
+      )
 }
-
-  }
+  }}

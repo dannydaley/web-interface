@@ -60,7 +60,7 @@ let SQLdatabase = new sqlite3.Database('./SQLdatabase.db');
 app.locals.SQLdatabase = SQLdatabase;
 
 const FIND_USER = "SELECT * FROM users WHERE email = ?";
-const SIGN_UP_USER = "INSERT INTO users (email, username, firstName,lastName, password, passwordSalt, profilePicture) VALUES(?,?,?,?,?,?,?)";
+const SIGN_UP_USER = "INSERT INTO users (email, username, firstName,lastName, password, passwordSalt) VALUES(?,?,?,?,?,?)";
 
 
 // app.get('/', (req, res, next) => {
@@ -69,25 +69,73 @@ const SIGN_UP_USER = "INSERT INTO users (email, username, firstName,lastName, pa
 
 
 // users table setup endpoint
+// users table setup endpoint
 app.get('/usersSetup', (req, res, next) => {
     SQLdatabase.serialize(() => {
-      //delete the table if it exists..
-      SQLdatabase.run('DROP TABLE IF EXISTS `users`');
+      //delete the table if it exists..   
+      SQLdatabase.run('DROP TABLE IF EXISTS users');
       //recreate the users table  
-      SQLdatabase.run('CREATE TABLE `users` (id INTEGER PRIMARY KEY AUTOINCREMENT, username varchar(255) UNIQUE, firstName varchar(255), lastName varchar(255), email varchar(255) UNIQUE, password varchar(255), passwordSalt varchar(512)');
-      //create array of users from the dummy data JSON file
-    //   let users = userDataJSON.users; 
-      // insert each element in the array of objects into the users table in the database
-    //   users.forEach((user) => {
-    //     // SQL query to run
-    //     SQLdatabase.run('INSERT INTO `users` (username, firstName, lastName, email, password, passwordSalt) VALUES(?, ?, ?, ?, ?, ?)', 
-    //       // values passed in from current iteration of the users array
-    //       [user.username, user.firstName, user.lastName, user.email, user.password, user.passwordSalt, user.aboutMe, user.location, user.education, user.work, user.profilePicture, user.coverPicture, user.circles ]);
-    //   });
-    });
+      SQLdatabase.run('CREATE TABLE users (id INTEGER PRIMARY KEY AUTOINCREMENT, username varchar(255) UNIQUE, firstName varchar(255), lastName varchar(255), email varchar(255) UNIQUE, password varchar(255), passwordSalt varchar(512))', (err, rows) => {
+          if (err) console.log(err);
+          console.log(rows)
+      });
     // respond with success page
-    console.log("users table set up");
     res.send("user-db-done");
+  });
+})
+
+
+app.post('/signUp', (req, res) => {  
+    //set up variables from the request for better readability
+    let { signUpEmail, signUpUserName,signUpFirstName, signUpLastName, signUpPassword, confirmSignUpPassword } = req.body;
+    //if both password fields match
+    if (signUpPassword === confirmSignUpPassword) {
+      //generate salt to store
+      let passwordSalt = generatePepper;
+      //generate password to store, using password from the confirm field, and the generated salt
+      let storePassword = passwordHash(confirmSignUpPassword, passwordSalt);
+      //Create a new user in the user database with the fields from the form, the default profile picture and the generated password hash and salt
+      SQLdatabase.run(SIGN_UP_USER, [ signUpEmail, signUpUserName, signUpFirstName, signUpLastName, storePassword, passwordSalt], (err, rows) => {
+        if (err) {
+          console.log("failed to add user to database")
+          console.log(err)
+          // if username already exists in database
+          if (err.message === "SQLITE_CONSTRAINT: UNIQUE constraint failed: users.username") {
+            console.log("USERNAME ALREADY EXISTS");
+            res.json("duplicate username");
+            return
+          };
+          // if email already exists in database
+          if (err.message === "SQLITE_CONSTRAINT: UNIQUE constraint failed: users.email") {
+            console.log("EMAIL ALREADY EXISTS");
+            res.json("duplicate email");
+            return;
+          };
+          // if any other error case, respond with status and error message
+          res.status(500).send(err.message);
+          return;
+        };
+        //respond with success 
+        res.json('sign up success');   
+      });
+    //response if password fields dont match    
+    } else {    
+      res.json("PASSWORDS DONT MATCH");
+    };
+  });
+
+  app.get('/getAllUsers', (req, res, next) => {
+    // grab all user data
+    SQLdatabase.get("SELECT * FROM users", [], (err, userData) => {
+      // if error
+      if (err) {
+        // respond with error status and error message
+        res.status(500).send(err.message);
+        return;
+      };
+      // respond with userData on success
+      res.send(userData);
+    });
   });
 
 
