@@ -4,7 +4,44 @@ import * as React from 'react';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
-export default function LoginPage() {
+export default class LoginPage extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      signInEmail: '',
+      signInPassword: ''            
+  }
+  }
+
+  onEmailChange = (event) => {
+    this.setState({signInEmail: event.target.value})
+}
+onPasswordChange = (event) => {
+    this.setState({signInPassword: event.target.value})
+    
+      
+}
+
+onSubmitSignIn = () => {
+  fetch('http://localhost:3001' + '/signin', {
+      method: 'post',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+          'email': this.state.signInEmail,
+          'password': this.state.signInPassword
+      })
+  })
+  .then(response => response.json())
+  .then(data => {
+      if (data.status === 'success') {            
+          this.props.updateSession(data.firstName, data.lastName, data.username, data.profilePicture, data.coverPicture);
+          this.props.onRouteChange('home')}
+      }
+  )
+}
+
+
+  render() {
 
     return(
       <div style={{height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center'
@@ -14,8 +51,7 @@ export default function LoginPage() {
         padding: '30px',
          backgroundColor: 'white',
           borderRadius: '10px', height: '300px', display: 'flex', flexDirection: 'row', justifyContent: 'center'
-          }}>
-           
+          }}>           
             <Box
       component="form"
       sx={{height: '300px',
@@ -31,16 +67,20 @@ export default function LoginPage() {
           label="email"
           defaultValue="email"
           helperText="Incorrect entry."
+          onChange={this.onEmailChange}
         />
         <TextField
           
           id="outlined-required"
           type="password" 
           label="password"
-          defaultValue="Hello World"
+          defaultValue=""
+          onChange={this.onPasswordChange}
         />
         
-         <Button variant="contained">Login</Button>
+         <Button variant="contained"
+                                     onSubmit={()=> this.onSubmitSignIn()}                            
+                                     onClick={() => this.onSubmitSignIn()}>Login</Button>
          
             
          
@@ -54,3 +94,5 @@ export default function LoginPage() {
         </div>
     )
 }
+
+  }

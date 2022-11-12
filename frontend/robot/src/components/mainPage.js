@@ -5,8 +5,7 @@ import Navbar from './navbar'
 export default function MainPage() {
     return(
         <div>
-            <Navbar />
-            
+            <Navbar />            
         </div>
     )
 }
