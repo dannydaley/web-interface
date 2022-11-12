@@ -18,16 +18,32 @@ services:
     depends_on:
       - ros-master
     environment:
-      #- ROS_MASTER_URI=http://ros-master:11311
       - DISPLAY=$DISPLAY
-        #- XAUTHORITY=$XAUTHORITY
+      - "ROS_MASTER_URI=http://ros-master:11311"
+    networks:
+      - ros
+    privileged: true
+    volumes:
+      - /dev/bus/usb:/dev/bus/usb
+    command: stdbuf -o L roslaunch realsense2_camera rs_rgbd.launch enable_pointcloud:=true align_depth:=false depth_registered_processing:=true align_depth:=true
+    restart: always
+
+  rviz:
+    container_name: rviz
+    build:
+      context: ./docker-ros-realsense/.
+      target: realsense_rviz
+    depends_on:
+      - ros-master
+    environment:
+      - DISPLAY=$DISPLAY
+      - "ROS_MASTER_URI=http://ros-master:11311"
     networks:
       - ros
     privileged: true
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix:ro
-      - /dev/bus/usb:/dev/bus/usb
-    command: stdbuf -o L roslaunch realsense2_camera rs_rgbd.launch enable_pointcloud:=true align_depth:=false depth_registered_processing:=true align_depth:=true
+    command: stdbuf -o L rviz
     restart: always
 
 networks:
