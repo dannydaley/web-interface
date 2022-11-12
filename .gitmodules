@@ -1,3 +1,6 @@
 [submodule "camerafeed/docker-ros-realsense"]
 	path = camerafeed/docker-ros-realsense
 	url = https://github.com/AlfredWilmot/docker-ros-realsense.git
+[submodule "camerafeed/intel-realsense-d415/docker-ros-realsense"]
+	path = camerafeed/intel-realsense-d415/docker-ros-realsense
+	url = https://github.com/AlfredWilmot/docker-ros-realsense.git
