@@ -22,7 +22,7 @@ export default function Navbar(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            News
+            Robot
           </Typography>
           <Button color="inherit" onClick={()=> props.onRouteChange('signout')}>Logout</Button>
         </Toolbar>
