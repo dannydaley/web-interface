@@ -30,7 +30,8 @@ export default class App extends Component {
         body: JSON.stringify({
              sender: this.props.loggedInUsername
         }) 
-      })      
+      })    
+      this.setState({route: 'signin'})  
     } else if (route === 'home') {
       this.setState({isSignedIn: true})
     }
@@ -41,7 +42,7 @@ export default class App extends Component {
     return (
      
       <div className="App" style={{backgroundColor: 'grey', minHeight: '100vh'}}>
-        { this.state.isSignedIn === true ? <MainPage /> : <LoginPage onRouteChange={this.onRouteChange} route={this.state.route}/> }
+        { this.state.isSignedIn === true ? <MainPage onRouteChange={this.onRouteChange}/> : <LoginPage onRouteChange={this.onRouteChange} route={this.state.route}/> }
       </div>
     );
   }

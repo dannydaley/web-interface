@@ -1,0 +1,10 @@
+input[type="range"]::-webkit-slider-runnable-track {
+    -webkit-appearance: none;
+    width: 3000px;
+    height: 50px;
+    background-color: green;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    visibility: hidden;
+}
