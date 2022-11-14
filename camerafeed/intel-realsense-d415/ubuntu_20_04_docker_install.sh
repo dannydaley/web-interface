@@ -1,11 +1,11 @@
-o "Installing prerequisites"
+echo "Installing prerequisites"
 sudo apt-get update
 sudo apt-get install -y \
         ca-certificates \
-            curl \
-                gnupg \
-                    lsb-release \
-                        git
+        curl \
+        gnupg \
+        lsb-release \
+        git
 
 echo "remove any previous versions of docker installed with apt"
 sudo apt-get remove docker docker-engine docker.io containerd runc
